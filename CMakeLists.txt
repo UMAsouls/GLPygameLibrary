@@ -13,12 +13,13 @@ FetchContent_MakeAvailable(googletest)
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 
-
+#テストのためのビルド部分
 enable_testing()
 
 add_executable(my_test ObjFileChecker/test1.cpp ObjFileChecker/ObjFileChecker.cpp)
 target_link_libraries(my_test gtest_main)
 
+#my_testの実行時にObjFileChecker/FinalBaseMesh.objをコピーする
 add_custom_command(
 	TARGET my_test POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy
@@ -26,8 +27,7 @@ add_custom_command(
 	$<TARGET_FILE_DIR:my_test>/FinalBaseMesh.obj
 )
 
-message($<TARGET_FILE_DIR:my_test>)
-
+#mytestをbuild
 include(GoogleTest)
 gtest_discover_tests(my_test
     DISCOVERY_TIMEOUT 30
