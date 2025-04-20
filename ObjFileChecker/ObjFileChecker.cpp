@@ -3,10 +3,6 @@
 #include <sstream>
 #include <fstream>
 
-
-ObjFileChecker::ObjFileChecker(const std::string& path) : filePath(path),
-    v_num(0), vt_num(0), vn_num(0), f_num(0), f_v_num(0) {}
-
 // objが正しいか確認する関数
 // 頂点数などもカウントする
 bool ObjFileChecker::checkObjFile() {
@@ -47,5 +43,7 @@ bool ObjFileChecker::checkObjFile() {
         datas.push_back(line); // Store the line in the datas array
     }
     file.close();
+
+    return true;
 
 }
