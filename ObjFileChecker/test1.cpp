@@ -1,23 +1,28 @@
 #include "ObjFileChecker.h"
+#include "gtest/gtest.h"
 
 #include <iostream>
 
+#include <windows.h>
+
 using namespace std;
 
-int main() {
-    // Create an instance of ObjFileChecker with the path to the .obj file
-    ObjFileChecker checker("FinalBaseMesh.obj");
+#define OBJ_FILE_PATH "FinalBaseMesh.obj"
+#define OBJ_VERTEX_COUNT 24461
+#define OBJ_NORMAL_COUNT 24460
+#define OBJ_TEXTURE_VERTEX_COUNT 0
+#define OBJ_FACE_COUNT 24459
 
-    // Check the .obj file for validity
-    if (checker.checkObjFile()) {
-        std::cout << "OBJ file is valid." << std::endl;
-        std::cout << "Number of vertices: " << checker.getVertexCount() << std::endl;
-        std::cout << "Number of texture vertices: " << checker.getTextureVertexCount() << std::endl;
-        std::cout << "Number of normals: " << checker.getNormalCount() << std::endl;
-        std::cout << "Number of faces: " << checker.getFaceCount() << std::endl;
-    } else {
-        std::cerr << "OBJ file is invalid." << std::endl;
-    }
+TEST(ObjFileCheckerTest, CheckObjFile) {
+    char cdir[255];
+    GetCurrentDirectory(255,cdir);
+    cout << "Current Directory : " << cdir << endl;
 
-    return 0;
+    ObjFileChecker objFileChecker(OBJ_FILE_PATH);
+    EXPECT_TRUE(objFileChecker.checkObjFile()) << "Failed to check the .obj file.";
+
+    EXPECT_EQ(objFileChecker.getVertexCount(), OBJ_VERTEX_COUNT) << "Vertex count mismatch.";
+    EXPECT_EQ(objFileChecker.getNormalCount(), OBJ_NORMAL_COUNT) << "Normal count mismatch.";
+    EXPECT_EQ(objFileChecker.getTextureVertexCount(), OBJ_TEXTURE_VERTEX_COUNT) << "Texture vertex count mismatch.";
+    EXPECT_EQ(objFileChecker.getFaceCount(), OBJ_FACE_COUNT) << "Face count mismatch.";
 }
