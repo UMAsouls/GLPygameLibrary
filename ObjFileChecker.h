@@ -1,5 +1,8 @@
+#pragma once
+
 #include <string>
 #include <fstream>
+#include <vector>
 
 class ObjFileChecker {
 private:
@@ -13,14 +16,15 @@ private:
 
     int f_v_num; // Number of vertex indices in faces
 
-    std::string* datas; // Array to store the data from the .obj file
-
-    bool checkFileValidity(); // Check if the .obj file is valid
-    void storeData(); // Store the data from the .obj file
+    std::vector<std::string> datas; // Array to store the data from the .obj file
+    int line_num = 0; // Line number in the .obj file
 
 public:
     ObjFileChecker(const std::string& path) : filePath(path),
      v_num(0), vt_num(0), vn_num(0), f_num(0), f_v_num(0) {}
+
+    ~ObjFileChecker() { } // Destructor to clean up the data array
+     
     std::string getMtlPath() const { return mtlPath; } // Get the path to the .mtl file
     int getVertexCount() const { return v_num; } // Get the number of vertices
     int getTextureVertexCount() const { return vt_num; } // Get the number of texture vertices

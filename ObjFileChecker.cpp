@@ -7,18 +7,15 @@
 ObjFileChecker::ObjFileChecker(const std::string& path) : filePath(path),
     v_num(0), vt_num(0), vn_num(0), f_num(0), f_v_num(0) {}
 
-bool ObjFileChecker::checkFileValidity() {
-    std::ifstream file(filePath);
-    return file.is_open();
-}
-
+// objが正しいか確認する関数
+// 頂点数などもカウントする
 bool ObjFileChecker::checkObjFile() {
-    if(!checkFileValidity()) {
+    std::ifstream file(filePath);
+    if (!file.is_open()) {
         std::cerr << "Error: Could not open file " << filePath << std::endl;
         return false;
     }
-
-    std::ifstream file(filePath);
+    
 
     std::string line;
     while(std::getline(file, line)) {
@@ -34,16 +31,21 @@ bool ObjFileChecker::checkObjFile() {
             vn_num++;
         } else if(prefix == "f") {
             f_num++;
+
+            int n = 0;
             std::string face;
-            while(iss >> face) {
-                std::istringstream faceStream(face);
-                std::string vertexIndex;
-                std::getline(faceStream, vertexIndex, '/');
-                f_v_num++;
-            }
+            while(iss >> face) n++;
+
+            if(n >= 4) f_v_num = 6;
+            else if(n == 3) f_v_num = 3;
+
         } else if(prefix == "mtllib") {
             iss >> mtlPath;
         }
+
+        line_num++;
+        datas.push_back(line); // Store the line in the datas array
     }
+    file.close();
 
 }
