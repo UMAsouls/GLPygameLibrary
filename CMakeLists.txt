@@ -43,3 +43,12 @@ gtest_discover_tests(my_test
     DISCOVERY_TIMEOUT 30
     PROPERTIES WORKING_DIRECTORY $<TARGET_FILE_DIR:my_test>
 )
+
+add_executable(my_test2 VertexDB/test2.cpp VertexDB/VertexDB.cpp)
+#テストとgtestをリンクする
+target_link_libraries(my_test2 gtest_main)
+
+gtest_discover_tests(my_test2
+	DISCOVERY_TIMEOUT 30
+	PROPERTIES WORKING_DIRECTORY $<TARGET_FILE_DIR:my_test2>
+)

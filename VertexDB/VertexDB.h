@@ -5,9 +5,9 @@
 
 class VertexDB {
 private:
-    int* vertices[3];
-    int* normals[3];
-    int* texpos[2];
+    float* vertices[3];
+    float* normals[3];
+    float* texpos[2];
 
     int vhead;
     int vthead;
@@ -18,15 +18,15 @@ public:
         for (int i = 0; i < 3; ++i) {
             vertices[i] = nullptr;
             normals[i] = nullptr;
-            texpos[i] = nullptr;
+            if(i<2) texpos[i] = nullptr;
         }
     }
 
     VertexDB(int v_num, int vt_num, int vn_num): vhead(0), vthead(0), vnhead(0) {
         for (int i = 0; i < 3; ++i) {
-            vertices[i] = new int[v_num];
-            normals[i] = new int[vn_num];
-            texpos[i] = new int[vt_num];
+            vertices[i] = new float[v_num];
+            normals[i] = new float[vn_num];
+            if(i<2) texpos[i] = new float[vt_num];
         }
     }
 
@@ -34,7 +34,7 @@ public:
         for (int i = 0; i < 3; ++i) {
             delete[] vertices[i];
             delete[] normals[i];
-            delete[] texpos[i];
+            if(i<2) delete[] texpos[i];
         }
     }
 
