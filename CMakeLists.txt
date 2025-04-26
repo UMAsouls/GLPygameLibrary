@@ -1,8 +1,12 @@
+#C++のバージョン
 cmake_minimum_required(VERSION 3.10)
+#プロジェクト名と言語
 project(GLPygameLoder CXX)
 
+#FetchContentを使う
 include(FetchContent)
 
+#googletestをFetchContentで取得する
 FetchContent_Declare(
 	googletest
 	GIT_REPOSITORY https://github.com/google/googletest.git
@@ -10,13 +14,19 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+#gtestを使うための設定(windowsの時はこれを使う)
+if (WIN32)
+	# Windowsの場合、gtestを静的ライブラリとしてリンクする
+	set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+endif()
 
 
 #テストのためのビルド部分
 enable_testing()
 
+#テストを指定
 add_executable(my_test ObjFileChecker/test1.cpp ObjFileChecker/ObjFileChecker.cpp)
+#テストとgtestをリンクする
 target_link_libraries(my_test gtest_main)
 
 #my_testの実行時にObjFileChecker/FinalBaseMesh.objをコピーする
