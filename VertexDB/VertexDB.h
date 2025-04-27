@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vertex.h"
+#include "Vertex/Vertex.h"
 #include <string>
 
 class VertexDB {

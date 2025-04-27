@@ -21,6 +21,11 @@ if (WIN32)
 endif()
 
 
+include_directories(
+	${CMAKE_SOURCE_DIR}
+)
+
+
 #テストのためのビルド部分
 enable_testing()
 

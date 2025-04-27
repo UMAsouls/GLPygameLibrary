@@ -1,5 +1,5 @@
 #include "VertexDB.h"
-#include "Vertex.h"
+#include "Vertex/Vertex.h"
 #include <gtest/gtest.h>
 
 #include <iostream>
@@ -24,12 +24,12 @@ TEST(VertexDBTest, LoadObjLine) {
 
     // Check if the vertex was loaded correctly
     Vertex v = vertexDB.getPoint(0);
-    EXPECT_EQ(v.x, 10);
-    EXPECT_EQ(v.y, 20);
-    EXPECT_EQ(v.z, 30);
-    EXPECT_EQ(v.u, 5);
-    EXPECT_EQ(v.v, 5);
-    EXPECT_EQ(v.nx, 0);
-    EXPECT_EQ(v.ny, 10);
-    EXPECT_EQ(v.nz, 0);
+    EXPECT_EQ(v.X(), 10);
+    EXPECT_EQ(v.Y(), 20);
+    EXPECT_EQ(v.Z(), 30);
+    EXPECT_EQ(v.U(), 5);
+    EXPECT_EQ(v.V(), 5);
+    EXPECT_EQ(v.NX(), 0);
+    EXPECT_EQ(v.NY(), 10);
+    EXPECT_EQ(v.NZ(), 0);
 }
