@@ -1,7 +1,16 @@
 #C++のバージョン
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.14)
 #プロジェクト名と言語
 project(GLPygameLoder CXX)
+
+# C++17 + GNU拡張
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_EXTENSIONS ON)
+
+# CygwinまたはMinGWの場合、POSIX機能を有効にする
+if(CYGWIN OR MINGW)
+	add_definitions(-D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700)
+endif()
 
 #FetchContentを使う
 include(FetchContent)
@@ -10,15 +19,16 @@ include(FetchContent)
 FetchContent_Declare(
 	googletest
 	GIT_REPOSITORY https://github.com/google/googletest.git
-	GIT_TAG main
+	GIT_TAG v1.17.0
 )
-FetchContent_MakeAvailable(googletest)
 
 #gtestを使うための設定(windowsの時はこれを使う)
-if (WIN32)
+if (MSVC)
 	# Windowsの場合、gtestを静的ライブラリとしてリンクする
 	set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 endif()
+
+FetchContent_MakeAvailable(googletest)
 
 
 include_directories(
@@ -33,6 +43,7 @@ enable_testing()
 add_executable(my_test ObjFileChecker/test1.cpp ObjFileChecker/ObjFileChecker.cpp)
 #テストとgtestをリンクする
 target_link_libraries(my_test gtest_main)
+target_compile_features(my_test PRIVATE cxx_std_17)
 
 #my_testの実行時にObjFileChecker/FinalBaseMesh.objをコピーする
 add_custom_command(
@@ -52,6 +63,7 @@ gtest_discover_tests(my_test
 add_executable(my_test2 VertexDB/test2.cpp VertexDB/VertexDB.cpp)
 #テストとgtestをリンクする
 target_link_libraries(my_test2 gtest_main)
+target_compile_features(my_test2 PRIVATE cxx_std_17)
 
 gtest_discover_tests(my_test2
 	DISCOVERY_TIMEOUT 30
