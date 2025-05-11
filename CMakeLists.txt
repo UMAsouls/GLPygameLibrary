@@ -1,7 +1,7 @@
 #C++のバージョン
 cmake_minimum_required(VERSION 3.14)
 #プロジェクト名と言語
-project(GLPygameLoder CXX)
+project(GLPygameLibrary CXX)
 
 # C++17 + GNU拡張
 set(CMAKE_CXX_STANDARD 17)
