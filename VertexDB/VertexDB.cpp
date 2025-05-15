@@ -4,9 +4,9 @@
 
 Vertex VertexDB::getPoint(int idx) const {
     Vertex point(
-        vertices[0][idx], vertices[1][idx], vertices[2][idx],
-        normals[0][idx], normals[1][idx], normals[2][idx],
-        texpos[0][idx], texpos[1][idx]
+        vertices[idx].x, vertices[idx].y, vertices[idx].z,
+        normals[idx].x, normals[idx].y, normals[idx].z,
+        texpos[idx].x, texpos[idx].y
     );
 
     return point;
@@ -20,13 +20,13 @@ void VertexDB::loadObjLine(const std::string& line) {
 
     std::string prefix = line.substr(0, 2);
     if (prefix == "vn") {
-        sscanf(line.c_str(), "vn %f %f %f", &normals[0][vnhead], &normals[1][vnhead], &normals[2][vnhead]);
+        sscanf(line.c_str(), "vn %f %f %f", &normals[vnhead].x, &normals[vnhead].y, &normals[vnhead].z);
         vnhead++;
     } else if (prefix == "vt") {
-        sscanf(line.c_str(), "vt %f %f", &texpos[0][vthead], &texpos[1][vthead]);
+        sscanf(line.c_str(), "vt %f %f", &texpos[vthead].x, &texpos[vthead].y);
         vthead++;
     }else if (prefix == "v ") {
-        sscanf(line.c_str(), "v %f %f %f", &vertices[0][vhead], &vertices[1][vhead], &vertices[2][vhead]);
+        sscanf(line.c_str(), "v %f %f %f", &vertices[vhead].x, &vertices[vhead].y, &vertices[vhead].z);
         vhead++;
     }
 }
