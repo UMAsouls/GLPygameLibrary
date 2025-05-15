@@ -16,13 +16,16 @@ Vertex VertexDB::getPoint(int idx) const {
 // 頂点情報を読み込む
 void VertexDB::loadObjLine(const std::string& line) {
     
-    if (line._Starts_with("vn")) {
+    if(line.size() < 2) return; // Ignore empty lines
+
+    std::string prefix = line.substr(0, 2);
+    if (prefix == "vn") {
         sscanf(line.c_str(), "vn %f %f %f", &normals[0][vnhead], &normals[1][vnhead], &normals[2][vnhead]);
         vnhead++;
-    } else if (line._Starts_with("vt")) {
+    } else if (prefix == "vt") {
         sscanf(line.c_str(), "vt %f %f", &texpos[0][vthead], &texpos[1][vthead]);
         vthead++;
-    }else if (line._Starts_with("v ")) {
+    }else if (prefix == "v ") {
         sscanf(line.c_str(), "v %f %f %f", &vertices[0][vhead], &vertices[1][vhead], &vertices[2][vhead]);
         vhead++;
     }
