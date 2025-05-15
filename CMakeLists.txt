@@ -31,8 +31,19 @@ endif()
 FetchContent_MakeAvailable(googletest)
 
 
+#glmをFetchContentで取得する
+FetchContent_Declare(
+	glm
+	GIT_REPOSITORY	https://github.com/g-truc/glm.git
+	GIT_TAG 	bf71a834948186f4097caa076cd2663c69a10e1e #refs/tags/1.0.1
+)
+
+FetchContent_MakeAvailable(glm)
+
+
 include_directories(
 	${CMAKE_SOURCE_DIR}
+	${glm_SOURCE_DIR}
 )
 
 
@@ -43,6 +54,7 @@ enable_testing()
 add_executable(my_test ObjFileChecker/test1.cpp ObjFileChecker/ObjFileChecker.cpp)
 #テストとgtestをリンクする
 target_link_libraries(my_test gtest_main)
+target_link_libraries(my_test glm)
 target_compile_features(my_test PRIVATE cxx_std_17)
 
 #my_testの実行時にObjFileChecker/FinalBaseMesh.objをコピーする
@@ -63,6 +75,7 @@ gtest_discover_tests(my_test
 add_executable(my_test2 VertexDB/test2.cpp VertexDB/VertexDB.cpp)
 #テストとgtestをリンクする
 target_link_libraries(my_test2 gtest_main)
+target_link_libraries(my_test2 glm)
 target_compile_features(my_test2 PRIVATE cxx_std_17)
 
 gtest_discover_tests(my_test2
