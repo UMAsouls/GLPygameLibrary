@@ -3,8 +3,6 @@
 
 #include <iostream>
 
-#include <windows.h>
-
 using namespace std;
 
 #define OBJ_FILE_PATH "FinalBaseMesh.obj"
@@ -14,9 +12,6 @@ using namespace std;
 #define OBJ_FACE_COUNT 24459
 
 TEST(ObjFileCheckerTest, CheckObjFile) {
-    char cdir[255];
-    GetCurrentDirectory(255,cdir);
-    cout << "Current Directory : " << cdir << endl;
 
     ObjFileChecker objFileChecker(OBJ_FILE_PATH);
     EXPECT_TRUE(objFileChecker.checkObjFile()) << "Failed to check the .obj file.";
